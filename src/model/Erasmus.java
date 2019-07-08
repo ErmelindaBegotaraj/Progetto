@@ -185,4 +185,23 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		return PlacementGrant;
 	}
 	
+	
+@Override
+public String toString() {
+	return "Erasmus [HomeInstitution=" + HomeInstitution + ", Country=" + Country + ", Nationality=" + Nationality
+			+ ", LevelStudy=" + LevelStudy + ", HostInstitution=" + HostInstitution
+			+ ", CountryCodeOfHostInstitution=" + CountryCodeOfHostInstitution + ", PlacementEnterprise="
+			+ PlacementEnterprise + ", CountryOfPlacement=" + CountryOfPlacement + ", StudyStartDate="
+			+ StudyStartDate + ", PlacementStartDate=" + PlacementStartDate + ", ConsortiumAgreementNumber="
+			+ ConsortiumAgreementNumber + ", LanguageTaught=" + LanguageTaught + ", LIngPreparation="
+			+ LIngPreparation + ", Gender=" + Gender + ", MobilityType=" + MobilityType + ", EnterpriseSize="
+			+ EnterpriseSize + ", TypePlacementSector=" + TypePlacementSector + ", ShortDuration=" + ShortDuration
+			+ ", TaughtHostLang=" + TaughtHostLang + ", PreviousParticipation=" + PreviousParticipation
+			+ ", QualificationAtHost=" + QualificationAtHost + ", Age=" + Age + ", SubjectArea=" + SubjectArea
+			+ ", YearsPrior=" + YearsPrior + ", EctsCreditsStudy=" + EctsCreditsStudy + ", EctsCreditsPlacement="
+			+ EctsCreditsPlacement + ", TotalEcts=" + TotalEcts + ", SnSupplement=" + SnSupplement + ", StudyGrant="
+			+ StudyGrant + ", LengthStudyPeriod=" + LengthStudyPeriod + ", LengthPlacement=" + LengthPlacement
+			+ ", PlacementGrant=" + PlacementGrant + "]";
+	}
+	
 }
