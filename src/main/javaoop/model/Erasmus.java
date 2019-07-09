@@ -3,9 +3,8 @@ package main.javaoop.model;
 import java.io.Serializable;
 
 public class Erasmus implements Serializable { //Serializable permette di salvare gli oggetti su file
-	private String HomeInstitution,Country,Nationality,LevelStudy,HostInstitution,CountryCodeOfHostInstitution,PlacementEnterprise,CountryOfPlacement,StudyStartDate,PlacementStartDate,ConsortiumAgreementNumber,LanguageTaught,LingPreparation;
-	
-	private String Gender,MobilityType,EnterpriseSize,TypePlacementSector,ShortDuration,TaughtHostLang,PreviousParticipation,QualificationAtHost;
+	private String HomeInstitution,Country,Nationality,LevelStudy,HostInstitution,CountryCodeOfHostInstitution,PlacementEnterprise,CountryOfPlacement,StudyStartDate,PlacementStartDate,ConsortiumAgreementNumber,LanguageTaught,LingPreparation,
+					Gender,MobilityType,EnterpriseSize,TypePlacementSector,ShortDuration,TaughtHostLang,PreviousParticipation,QualificationAtHost;
 	
 	private int Age,SubjectArea,YearsPrior,EctsCreditsStudy,EctsCreditsPlacement,TotalEcts;
 	
@@ -18,6 +17,7 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 			String countryOfPlacement, String enterpriseSize, String typePlacementSector,double lengthStudyPeriod, double lengthPlacement, String shortDuration, String studyStartDate, String placementStartDate,
 			String consortiumAgreementNumber, int ectsCreditsStudy, int ectsCreditsPlacement, int totalEcts, double snSupplement, String taughtHostLang, String languageTaught, String lingPreparation,
 			double studyGrant, double placementGrant, String previousParticipation,String qualificationAtHost) {
+		
 		this.HomeInstitution = homeInstitution;
 		this.Country = country;
 		this.Nationality = nationality;

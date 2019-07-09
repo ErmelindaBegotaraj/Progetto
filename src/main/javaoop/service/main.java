@@ -2,7 +2,8 @@ package main.javaoop.service;
 import java.util.List;
 
 import main.javaoop.model.Erasmus;
-import main.javaoop.service.ParsingCSV;
+import main.javaoop.Utilities.DownloadDataset;
+import main.javaoop.Utilities.ParsingCSV;
 
 public class main {
 
@@ -10,7 +11,7 @@ public class main {
 		// TODO Auto-generated method stub
 		DownloadDataset ob= new DownloadDataset();
 		ParsingCSV ob1= new ParsingCSV();
-		//ob1.SerializzazioneDati(Prova.txt,ob1.getList());
+		//ob1.SerializzazioneDati(,ob1.getList());
 	}
 
 }
