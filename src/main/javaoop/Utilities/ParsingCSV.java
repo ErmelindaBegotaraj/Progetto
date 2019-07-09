@@ -21,14 +21,16 @@ public class ParsingCSV {
 			String line = "";
 		    String csvSplitBy = ";";
 		    BufferedReader br= null;
-		    boolean flag= false;
+		    boolean flag1= false, flag2= false;
+		    int count= 0;
 		    
 		    try {
 		    	
 		    	br = new BufferedReader(new FileReader(csvFile));
 		    	
-		    	while ((line = br.readLine()) != null) {
-		    		if(!flag) {flag=true; continue;}
+		    	while (((line = br.readLine()) != null) && !flag2) {
+		    		if (count==500) flag2= true;
+		    		if (!flag1) {flag1=true; continue;}
 		    		String[] valore = line.split(csvSplitBy);
 	    			lista.add(new Erasmus (valore[0],valore[1],Integer.parseInt(valore[2]),valore[3],valore[4],Integer.parseInt(valore[5]),valore[6],Integer.parseInt(valore[7]),valore[8],valore[9],valore[10],
 	    									valore[11],valore[12],valore[13],valore[14],Double.parseDouble(valore[15]),Double.parseDouble(valore[16]),valore[17],valore[18],valore[19],valore[20],
@@ -47,6 +49,7 @@ public class ParsingCSV {
 	                }
 	           }
 	        }
+		    System.out.println("Parsing completato.");
 	}
 		
 	public List<Erasmus> getList() {
