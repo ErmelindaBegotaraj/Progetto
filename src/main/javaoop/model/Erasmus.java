@@ -3,24 +3,21 @@ package main.javaoop.model;
 import java.io.Serializable;
 
 public class Erasmus implements Serializable { //Serializable permette di salvare gli oggetti su file
-	private String HomeInstitution,Country,Nationality,LevelStudy,HostInstitution,CountryCodeOfHostInstitution,PlacementEnterprise,CountryOfPlacement,StudyStartDate,PlacementStartDate,ConsortiumAgreementNumber,LanguageTaught,LIngPreparation;
+	private String HomeInstitution,Country,Nationality,LevelStudy,HostInstitution,CountryCodeOfHostInstitution,PlacementEnterprise,CountryOfPlacement,StudyStartDate,PlacementStartDate,ConsortiumAgreementNumber,LanguageTaught,LingPreparation;
 	
 	private String Gender,MobilityType,EnterpriseSize,TypePlacementSector,ShortDuration,TaughtHostLang,PreviousParticipation,QualificationAtHost;
 	
-	private int Age,SubjectArea,YearsPrior,EctsCreditsStudy,EctsCreditsPlacement,TotalEcts,SnSupplement,StudyGrant;
+	private int Age,SubjectArea,YearsPrior,EctsCreditsStudy,EctsCreditsPlacement,TotalEcts;
 	
-	private double LengthStudyPeriod,LengthPlacement,PlacementGrant;
+	private double LengthStudyPeriod,LengthPlacement,PlacementGrant,StudyGrant,SnSupplement;
 	
 	//Costruttore della classe
 
-	public Erasmus(String homeInstitution, String country, String nationality, String levelStudy,
-			String hostInstitution, String countryCodeOfHostInstitution, String placementEnterprise,
-			String countryOfPlacement, String studyStartDate, String placementStartDate,
-			String consortiumAgreementNumber, String languageTaught, String lIngPreparation, String gender,
-			String mobilityType, String enterpriseSize, String typePlacementSector, String shortDuration, String taughtHostLang,
-			String previousParticipation, String qualificationAtHost, int age, int subjectArea, int yearsPrior,
-			int ectsCreditsStudy, int ectsCreditsPlacement, int totalEcts, int snSupplement, int studyGrant,
-			double lengthStudyPeriod, double lengthPlacement, double placementGrant) {
+	public Erasmus(String homeInstitution, String country, int age, String gender, String nationality, int subjectArea, String levelStudy,
+			int yearsPrior, String mobilityType, String hostInstitution, String countryCodeOfHostInstitution, String placementEnterprise,
+			String countryOfPlacement, String enterpriseSize, String typePlacementSector,double lengthStudyPeriod, double lengthPlacement, String shortDuration, String studyStartDate, String placementStartDate,
+			String consortiumAgreementNumber, int ectsCreditsStudy, int ectsCreditsPlacement, int totalEcts, double snSupplement, String taughtHostLang, String languageTaught, String lingPreparation,
+			double studyGrant, double placementGrant, String previousParticipation,String qualificationAtHost) {
 		this.HomeInstitution = homeInstitution;
 		this.Country = country;
 		this.Nationality = nationality;
@@ -33,7 +30,7 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		this.PlacementStartDate = placementStartDate;
 		this.ConsortiumAgreementNumber = consortiumAgreementNumber;
 		this.LanguageTaught = languageTaught;
-		this.LIngPreparation = lIngPreparation;
+		this.LingPreparation = lingPreparation;
 		this.Gender = gender;
 		this.MobilityType = mobilityType;
 		this.EnterpriseSize = enterpriseSize;
@@ -106,7 +103,7 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 	}
 
 	public String getLIngPreparation() {
-		return LIngPreparation;
+		return LingPreparation;
 	}
 
 	public String getGender() {
@@ -165,11 +162,11 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		return TotalEcts;
 	}
 
-	public int getSnSupplement() {
+	public double getSnSupplement() {
 		return SnSupplement;
 	}
 
-	public int getStudyGrant() {
+	public double getStudyGrant() {
 		return StudyGrant;
 	}
 
@@ -194,7 +191,7 @@ public String toString() {
 			+ PlacementEnterprise + ", CountryOfPlacement=" + CountryOfPlacement + ", StudyStartDate="
 			+ StudyStartDate + ", PlacementStartDate=" + PlacementStartDate + ", ConsortiumAgreementNumber="
 			+ ConsortiumAgreementNumber + ", LanguageTaught=" + LanguageTaught + ", LIngPreparation="
-			+ LIngPreparation + ", Gender=" + Gender + ", MobilityType=" + MobilityType + ", EnterpriseSize="
+			+ LingPreparation + ", Gender=" + Gender + ", MobilityType=" + MobilityType + ", EnterpriseSize="
 			+ EnterpriseSize + ", TypePlacementSector=" + TypePlacementSector + ", ShortDuration=" + ShortDuration
 			+ ", TaughtHostLang=" + TaughtHostLang + ", PreviousParticipation=" + PreviousParticipation
 			+ ", QualificationAtHost=" + QualificationAtHost + ", Age=" + Age + ", SubjectArea=" + SubjectArea
