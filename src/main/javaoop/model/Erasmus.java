@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Erasmus implements Serializable { //Serializable permette di salvare gli oggetti su file
 	private String HomeInstitution,Country,Nationality,LevelStudy,HostInstitution,CountryCodeOfHostInstitution,PlacementEnterprise,CountryOfPlacement,StudyStartDate,PlacementStartDate,ConsortiumAgreementNumber,LanguageTaught,LIngPreparation;
 	
-	private char Gender,MobilityType,EnterpriseSize,TypePlacementSector,ShortDuration,TaughtHostLang,PreviousParticipation,QualificationAtHost;
+	private String Gender,MobilityType,EnterpriseSize,TypePlacementSector,ShortDuration,TaughtHostLang,PreviousParticipation,QualificationAtHost;
 	
 	private int Age,SubjectArea,YearsPrior,EctsCreditsStudy,EctsCreditsPlacement,TotalEcts,SnSupplement,StudyGrant;
 	
@@ -16,9 +16,9 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 	public Erasmus(String homeInstitution, String country, String nationality, String levelStudy,
 			String hostInstitution, String countryCodeOfHostInstitution, String placementEnterprise,
 			String countryOfPlacement, String studyStartDate, String placementStartDate,
-			String consortiumAgreementNumber, String languageTaught, String lIngPreparation, char gender,
-			char mobilityType, char enterpriseSize, char typePlacementSector, char shortDuration, char taughtHostLang,
-			char previousParticipation, char qualificationAtHost, int age, int subjectArea, int yearsPrior,
+			String consortiumAgreementNumber, String languageTaught, String lIngPreparation, String gender,
+			String mobilityType, String enterpriseSize, String typePlacementSector, String shortDuration, String taughtHostLang,
+			String previousParticipation, String qualificationAtHost, int age, int subjectArea, int yearsPrior,
 			int ectsCreditsStudy, int ectsCreditsPlacement, int totalEcts, int snSupplement, int studyGrant,
 			double lengthStudyPeriod, double lengthPlacement, double placementGrant) {
 		this.HomeInstitution = homeInstitution;
@@ -109,35 +109,35 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		return LIngPreparation;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return Gender;
 	}
 
-	public char getMobilityType() {
+	public String getMobilityType() {
 		return MobilityType;
 	}
 
-	public char getEnterpriseSize() {
+	public String getEnterpriseSize() {
 		return EnterpriseSize;
 	}
 
-	public char getTypePlacementSector() {
+	public String getTypePlacementSector() {
 		return TypePlacementSector;
 	}
 
-	public char getShortDuration() {
+	public String getShortDuration() {
 		return ShortDuration;
 	}
 
-	public char getTaughtHostLang() {
+	public String getTaughtHostLang() {
 		return TaughtHostLang;
 	}
 
-	public char getPreviousParticipation() {
+	public String getPreviousParticipation() {
 		return PreviousParticipation;
 	}
 
-	public char getQualificationAtHost() {
+	public String getQualificationAtHost() {
 		return QualificationAtHost;
 	}
 
