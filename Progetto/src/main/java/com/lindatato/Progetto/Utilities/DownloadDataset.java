@@ -1,4 +1,4 @@
-package com.lindatato.Progetto..Utilities;
+package com.lindatato.Progetto.Utilities;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -54,13 +54,13 @@ public class DownloadDataset {
 			        	download(urlD, file);
 			        }
 			    }
-			}
-			System.out.println( "\nDownload completato." );
+			}			
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
+		System.out.println( "\nDownload completato." );
 }
 	
 	public static void download(String url, String fileName) throws Exception {
