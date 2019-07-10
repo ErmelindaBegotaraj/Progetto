@@ -15,6 +15,8 @@ import main.javaoop.model.Erasmus;
 public class ParsingCSV {
 	
 	private List<Erasmus> lista = new ArrayList<>();
+	private List<Map> metadata = new ArrayList<>();
+	
 
 	public ParsingCSV() {
 			String csvFile= "student_1112.csv";
@@ -52,10 +54,26 @@ public class ParsingCSV {
 		    System.out.println("Parsing completato.");
 	}
 		
-	public List<Erasmus> getList() {
-			return lista;
-		}
-		
+	public List getMetadata() {
+		return metadata;
+	}
+	
+	public Erasmus getHostIst(int id) {
+		if(id < List.size()) return List.get(id);
+		else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id Host Country: '" + id + "' does not exist");
+	}
+	
+	public Erasmus getHometIst(int id) {
+		if(id < List.size()) return List.get(id);
+		else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id Home Country: '" + id + "' does not exist");
+	}
+		*/
+	
+	public List getAllData(){
+		return lista;
+	}
+ 
+    
 	public static void SerializzazioneDati(File file, List<Erasmus> dati) {
 			   try {			   
 				   ObjectOutputStream output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
