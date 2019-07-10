@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.*;
 
-import main.javaoop.model.Erasmus;
+import com.lindatato.Progetto.Model.Erasmus;
 
 public class ParsingCSV {
 	
