@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path="Progetto/src/main/java"/>
-	<classpathentry kind="src" path="Progetto/src/main/resources"/>
-	<classpathentry kind="src" path="Progetto/src/test/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/corra/Desktop/CORRADO RAIOLA/UNIVERSITÀ/II ANNO/PROGRAMMAZIONE A OGGETTI/PROGETTO/Progetto/json-simple-1.1.jar/json-simple-1.1.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
