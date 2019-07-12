@@ -1,4 +1,4 @@
-package Progetto.src.main.java.com.lindatato.Progetto.Utilities;
+package com.lindatato.Progetto.Utilities;
 
 import java.io.BufferedReader;
 import java.io.File;

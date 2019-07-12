@@ -1,9 +1,9 @@
-package Progetto.src.main.java.com.lindatato.Progetto.Controller;
+package com.lindatato.Progetto.Controller;
 
-import Progetto.src.main.java.com.lindatato.Progetto.Model.Erasmus;
-import Progetto.src.main.java.com.lindatato.Progetto.Utilities.DownloadDataset;
-import Progetto.src.main.java.com.lindatato.Progetto.Utilities.ParsingCSV;
-import Progetto.src.main.java.com.lindatato.Progetto.Service;
+import com.lindatato.Progetto.Model.Erasmus;
+import com.lindatato.Progetto.Utilities.DownloadDataset;
+import com.lindatato.Progetto.Utilities.ParsingCSV;
+import com.lindatato.Progetto.Service.Stats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class ErasmusDataController {
 
     //creo una variabile della classe Service
-    private ErasmusService utilities;
+    private ParsingCSV utilities;
 
     /**
      * Costruttore che con l'annotazione @Autowired viene lanciato automaticamente all'avvio da Spring e esegue il collegamento al Service

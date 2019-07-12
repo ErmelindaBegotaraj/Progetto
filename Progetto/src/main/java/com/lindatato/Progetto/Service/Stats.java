@@ -1,4 +1,4 @@
-package Progetto.src.main.java.com.lindatato.Progetto.Service;
+package com.lindatato.Progetto.Service;
 
 import java.util.*;
 

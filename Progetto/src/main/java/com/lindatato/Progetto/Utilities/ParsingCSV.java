@@ -1,4 +1,4 @@
-package Progetto.src.main.java.com.lindatato.Progetto.Utilities;
+package com.lindatato.Progetto.Utilities;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -67,7 +67,6 @@ public class ParsingCSV {
 		if(id < List.size()) return List.get(id);
 		else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id Home Country: '" + id + "' does not exist");
 	}
-		*/
 	
 	public List getAllData(){
 		return lista;

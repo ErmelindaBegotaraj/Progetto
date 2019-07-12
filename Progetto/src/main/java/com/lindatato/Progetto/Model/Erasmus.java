@@ -1,4 +1,4 @@
-package Progetto.src.main.java.com.lindatato.Progetto.Model;
+package com.lindatato.Progetto.Model;
 
 import java.io.Serializable;
 
