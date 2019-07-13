@@ -20,6 +20,7 @@ import com.lindatato.Progetto.Model.*;
 public class ErasmusService {
 	
 	private DownloadAndParsing utilities;
+	private Metadata service;
 	
 	public ErasmusService() {
 		
@@ -34,8 +35,8 @@ public class ErasmusService {
 		}
 	}
 	
-	public List getMetadata() {
-		return utilities.getMetadata();
+	public List<Map> getMetadata() {
+		return service.getMetadata();
 	}
 	
 	public List getData() {

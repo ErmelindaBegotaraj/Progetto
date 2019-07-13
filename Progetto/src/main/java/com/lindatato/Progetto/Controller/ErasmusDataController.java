@@ -50,33 +50,14 @@ public class ErasmusDataController {
      * @return lista dei metadata
      */
     @GetMapping("/metadata")
-    public List getMetadata() {
+    public List<Map> getMetadata() {
         return service.getMetadata();
     }
     
-    /** 
-     * Metodo che gestisce la richiesta GET alla rotta "/HostIst" , restituisce i nomi dei paesi ospitanti
-     * 
-     * @return lista dei paesi ospitanti
-     */
-   // @GetMapping("/HostIst")
-   /*
-    public List getHostIst() {
-    	return service.getHostIst();
-    }
-    */
-    /** 
-     * Metodo che gestisce la richiesta GET alla rotta "/HomeIst" , restituisce i nomi dei paesi d'origine
-     * 
-     * @return lista dei paesi d'origine
-     */
-    /*
-    @GetMapping("/HostIst")
-    public List getHostIst() {
-    	return service.getHostIst();
-    }
+
     @GetMapping("/stats")
     public Map getStats() {
+    	
     }
-    */
+    
 }

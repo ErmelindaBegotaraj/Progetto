@@ -33,7 +33,7 @@ public class DownloadAndParsing {
 	private String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=erasmus-mobility-statistics-2011-12";
 	private String file= new String("data-set.csv");
 	private Vector<Erasmus> lista = new Vector<Erasmus>();
-	private List<Map> metadata = new ArrayList<>();
+	
 	private String link = "";
 	
 	public DownloadAndParsing() {
@@ -116,9 +116,5 @@ public class DownloadAndParsing {
 	
 	public Vector<Erasmus> getData(){
 		return lista;
-	}
-	
-	public List getMetadata() {
-		return metadata;
 	}
 }

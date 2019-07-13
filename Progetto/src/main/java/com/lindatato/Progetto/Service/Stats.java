@@ -134,6 +134,12 @@ public class Stats {
 	 */
 	public static Map<String, Object> getStats(List<Object> lista) {
 		Map<String, Object> mappa = new HashMap<>();
+		if (lista.get(0) instanceof Number ) {
+			List<Number> listNum = new ArrayList<>();
+			for (Object elem : lista) {
+				listNum.add(((Number) elem));
+			}
+		}
 		return mappa;
 		
 	}
