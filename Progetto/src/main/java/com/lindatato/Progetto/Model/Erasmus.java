@@ -2,6 +2,11 @@ package com.lindatato.Progetto.Model;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * Classe che modella i campi del file CSV 
+ *
+ */
 public class Erasmus implements Serializable { //Serializable permette di salvare gli oggetti su file
 	private String HomeInstitution,Country,Nationality,LevelStudy,HostInstitution,CountryCodeOfHostInstitution,PlacementEnterprise,CountryOfPlacement,StudyStartDate,PlacementStartDate,ConsortiumAgreementNumber,LanguageTaught,LingPreparation,
 					Gender,MobilityType,EnterpriseSize,TypePlacementSector,ShortDuration,TaughtHostLang,PreviousParticipation,QualificationAtHost;
@@ -182,6 +187,11 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		return PlacementGrant;
 	}
 	
+	/**
+	 * Metodo toString usato per la stampa dell'oggetto
+	 * 
+	 * @return Restituisce una stringa contenente il valore dei campi concatenati
+	 */
 @Override
 public String toString() {
 	return "Erasmus [HomeInstitution=" + HomeInstitution + ", Country=" + Country + ", Nationality=" + Nationality

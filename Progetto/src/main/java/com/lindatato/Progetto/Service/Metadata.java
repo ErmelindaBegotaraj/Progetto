@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe utile per la gestione dei matadati quando vengono richiesti
+ */
+
 public class Metadata {
 	
 	
