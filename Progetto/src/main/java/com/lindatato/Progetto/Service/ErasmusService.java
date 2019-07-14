@@ -2,12 +2,12 @@ package com.lindatato.Progetto.Service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -20,11 +20,12 @@ import com.lindatato.Progetto.Model.*;
 public class ErasmusService {
 	
 	private DownloadAndParsing utilities;
-	private Metadata service;
+	private Metadata serviceMeta;
+	private Stats serviceStats;
 	
 	public ErasmusService() {
 		
-		String serialFile= "dataset1.ser";
+		String serialFile= "serial1.ser";
 		
 		if(Files.exists(Paths.get(serialFile))) {
 			SerialUpload(serialFile);
@@ -36,11 +37,34 @@ public class ErasmusService {
 	}
 	
 	public List<Map> getMetadata() {
-		return service.getMetadata();
+		return serviceMeta.getMetadata();
 	}
 	
-	public List getData() {
+	public Vector<Erasmus> getData() {
  		return utilities.getData();
+	}
+	
+	public Map<String, Object> getStats(String nomeCampo) {
+		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, getData()));
+	}
+	
+	public List fieldValues(String fieldName, Vector<Erasmus> list) {
+		List<Object> values = new ArrayList<>();
+		try {
+			Field[] fields = Erasmus.class.getDeclaredFields();
+			for(Erasmus e : list) {
+				for(int i=0; i < fields.length; i++) {
+					if(fieldName.equals(fields[i].getName())) {
+							values.add(e.getClass().getMethod(fields[i].getName()));
+					}
+				}
+			}
+		} catch(NoSuchMethodException ex) {
+			ex.printStackTrace();
+		} catch(SecurityException ex) {
+			ex.printStackTrace();
+		}
+		return values;
 	}
 	
 	public void SerialSaving(String file) {

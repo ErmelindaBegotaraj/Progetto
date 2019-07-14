@@ -182,7 +182,6 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		return PlacementGrant;
 	}
 	
-	
 @Override
 public String toString() {
 	return "Erasmus [HomeInstitution=" + HomeInstitution + ", Country=" + Country + ", Nationality=" + Nationality

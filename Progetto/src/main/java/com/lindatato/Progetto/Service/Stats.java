@@ -102,8 +102,9 @@ public class Stats {
 	 * @param lista fornisce i valori con i quali si possono calcolare tutte le statistiche
 	 * @return map che contiene come chiavi il nome della statistica e come valore quello calcolato tramite i metodi della classe
 	 */
-	public static Map<String, Number> NumStats(List<Number> lista) {
-		Map<String, Number> mappa = new HashMap<>();  //crea una mappa che contiene le chiavi e i valori delle statistiche numeriche
+	public static Map<String, Object> NumStats(String campo, List<Number> lista) {
+		Map<String, Object> mappa = new HashMap<>();  //crea una mappa che contiene le chiavi e i valori delle statistiche numeriche
+		mappa.put("field", campo);
 		mappa.put("count", count(lista));
 		mappa.put("sum", sum(lista));
 		mappa.put("avg", avg(lista));
@@ -119,8 +120,9 @@ public class Stats {
 	 * @param lista fornisce i valori con i quali si possono calcolare tutte le statistiche non numeriche
 	 * @return map che contiene come chiavi il nome della statistica e come valore quello calcolato tramite i metodi della classe
 	 */
-	public static Map<String, Object> StrStats(List lista) {
+	public static Map<String, Object> StrStats(String campo, List lista) {
 		Map<String, Object> mappa = new HashMap<>();  //crea una mappa che contiene le chiavi e i valori delle statistiche non numeriche
+		mappa.put("field", campo);
 		mappa.put("count", count(lista));
 		mappa.put("elementi unici", ElementiUnici(lista));
         return mappa;
@@ -132,15 +134,20 @@ public class Stats {
 	 * @param
 	 * @return
 	 */
-	public static Map<String, Object> getStats(List<Object> lista) {
+	public static Map<String, Object> getStats(String campo, List lista) {
 		Map<String, Object> mappa = new HashMap<>();
-		if (lista.get(0) instanceof Number ) {
-			List<Number> listNum = new ArrayList<>();
-			for (Object elem : lista) {
-				listNum.add(((Number) elem));
+		if(!lista.isEmpty()) {
+			if (lista.get(0) instanceof Number) {
+				List<Number> numList = new ArrayList<>();
+				for (Object elem : lista) {
+					numList.add(((Number) elem));
+				}
+				mappa = NumStats(campo, numList);
+			}
+			else {
+				mappa = StrStats(campo, lista);
 			}
 		}
 		return mappa;
-		
 	}
 }

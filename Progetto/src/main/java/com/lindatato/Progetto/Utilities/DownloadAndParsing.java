@@ -3,23 +3,11 @@ package com.lindatato.Progetto.Utilities;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Paths;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.*;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,8 +19,7 @@ import com.lindatato.Progetto.Model.Erasmus;
 public class DownloadAndParsing {
 	
 	private String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=erasmus-mobility-statistics-2011-12";
-	private String file= new String("data-set.csv");
-	private Vector<Erasmus> lista = new Vector<Erasmus>();
+	private Vector<Erasmus> erasmusList = new Vector<Erasmus>();
 	
 	private String link = "";
 	
@@ -88,7 +75,7 @@ public class DownloadAndParsing {
 	    		if (count==500) flag2= true;
 	    		if (!flag1) {flag1=true; continue;}
 	    		String[] valore = line.split(csvSplitBy);
-    			lista.add(new Erasmus (valore[0],valore[1],Integer.parseInt(valore[2]),valore[3],valore[4],Integer.parseInt(valore[5]),valore[6],Integer.parseInt(valore[7]),valore[8],valore[9],valore[10],
+	    		erasmusList.add(new Erasmus (valore[0],valore[1],Integer.parseInt(valore[2]),valore[3],valore[4],Integer.parseInt(valore[5]),valore[6],Integer.parseInt(valore[7]),valore[8],valore[9],valore[10],
     									valore[11],valore[12],valore[13],valore[14],Double.parseDouble(valore[15]),Double.parseDouble(valore[16]),valore[17],valore[18],valore[19],valore[20],
     									Integer.parseInt(valore[21]),Integer.parseInt(valore[22]),Integer.parseInt(valore[23]),Double.parseDouble(valore[24]),valore[25],valore[26],valore[27],
     									Double.parseDouble(valore[28]),Double.parseDouble(valore[29]),valore[30],valore[31])); }
@@ -106,15 +93,15 @@ public class DownloadAndParsing {
 	    		}
 	    	}
 	    System.out.println("Parsing completato.");
-	    /*for(Erasmus e : lista)
+	    /*for(Erasmus e : erasmusList)
 	    	System.out.println(e);*/
 	}
 	
 	public Vector<Erasmus> getList() {
-		return lista;
+		return erasmusList;
 	}
 	
 	public Vector<Erasmus> getData(){
-		return lista;
+		return erasmusList;
 	}
 }

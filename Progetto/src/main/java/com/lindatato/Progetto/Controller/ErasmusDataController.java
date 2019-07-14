@@ -1,13 +1,12 @@
 package com.lindatato.Progetto.Controller;
 
-import com.lindatato.Progetto.Utilities.*;
+import com.lindatato.Progetto.Model.Erasmus;
 import com.lindatato.Progetto.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +42,6 @@ public class ErasmusDataController {
         return service.getData();
     }
 
-  
     /**
      * Metodo che gestisce la richiesta GET alla rotta "/metadata", restituisce i metadata
      *
@@ -54,10 +52,27 @@ public class ErasmusDataController {
         return service.getMetadata();
     }
     
+    /**
+     * Metodo che gestisce la richiesta GET alla rotta "/stats" e che restituisce le statistiche
+     * 
+     * @param fieldName nome del campo del quale si vogliono calcolare le statistiche
+     * @return lista delle statistiche
+     */
 
     @GetMapping("/stats")
-    public Map getStats() {
-    	
-    }
+    public List getStats(@RequestParam(value = "field", defaultValue = "") String fieldName) {
+    	Field[] fields = Erasmus.class.getDeclaredFields();
+    	List<Map> list = new ArrayList<>();
+    	if(fieldName.equals("")) {
+    		for(int i=0; i < fields.length; i++) {
+    			list.add(service.getStats(fieldName));		
+    		}
+    		return list;
+    	}
+    	else {
+    		list.add(service.getStats(fieldName));
+    		return list;
+    	}
+	}
     
 }
