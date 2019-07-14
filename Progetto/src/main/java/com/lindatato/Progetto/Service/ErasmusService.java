@@ -46,7 +46,7 @@ public class ErasmusService {
 		}
 	}
 	/**
-	 * Classe che restituisce i metadati del file CSV
+	 * Metodo che restituisce i metadati del file CSV
 	 * @return la lista contenente i metadati
 	 */
 	public List<Map> getMetadata() {
