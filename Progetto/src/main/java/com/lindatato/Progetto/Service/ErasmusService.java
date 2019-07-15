@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -73,8 +75,10 @@ public class ErasmusService {
 			Field[] fields = Erasmus.class.getDeclaredFields();
 			for(Erasmus e : list) {
 				for(int i=0; i < fields.length; i++) {
-					if(fieldName.equals(fields[i].getName())) {
-							values.add(e.getClass().getMethod(fields[i].getName()));
+					if(fieldName.equals(fields[i].getName())) { 
+						//	values.add(e.getClass().getMethod(fields[i].getName()));
+						Method m = e.getClass().getMethod(fields[i].getName());
+						values.add(m.invoke(e));
 					}
 				}
 			}
@@ -82,6 +86,12 @@ public class ErasmusService {
 			ex.printStackTrace();
 		} catch(SecurityException ex) {
 			ex.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			e1.printStackTrace();
 		}
 		return values;
 	}
@@ -114,7 +124,7 @@ public class ErasmusService {
 			lista = (Vector<Erasmus>) in.readObject();
 			in.close();
 		} catch(ClassNotFoundException e) {
-			System.out.println("Manca ogetto nel file");
+			System.out.println("Manca oggetto nel file");
 			e.printStackTrace();
 		} catch(IOException e) {
 			System.out.println("Errore di I/O");

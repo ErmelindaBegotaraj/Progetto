@@ -1,8 +1,15 @@
 package com.lindatato.Progetto.Service;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
+
+import com.lindatato.Progetto.Model.Erasmus;
 
 /**
  * 
@@ -99,7 +106,65 @@ public class Filter {
 								return false;
 							}
 			}
+			else {
+				System.err.println("La lista potrebbe essere vuota o contenere elementi non validi.");
+				return false;
+			}
 		}
-		else return false;
+		else {
+			System.err.println("Elementi non validi");
+				return false;
+		
+		}
+	}
+	
+	public Collection select(Collection src, String fieldName, String op, Object val) {
+		Collection<Object> list = new ArrayList<Object>();
+		for(Object obj : src) {
+			
+			try {
+				
+				Field[] fields = Erasmus.class.getDeclaredFields();
+				Object tmp = null;
+					for(int i=0; i<fields.length; i++) {
+						if(fields[i].getName().equals(fieldName)) {
+						Method m = obj.getClass().getMethod(fields[i].getName());
+								tmp = m.invoke(obj);
+						if(Filter.check(tmp, op, val))
+							list.add(obj);
+							}
+						
+				}
+				
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();	
+			}catch (SecurityException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
