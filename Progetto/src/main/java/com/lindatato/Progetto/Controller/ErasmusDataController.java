@@ -17,6 +17,7 @@ import java.util.Map;
 public class ErasmusDataController {
 
     //creo una variabile della classe Service
+	@Autowired
     private ErasmusService service;
 
     /**
@@ -24,10 +25,10 @@ public class ErasmusDataController {
      *
      * @param service riferimento all'istanza del service inizializzata da Spring
      */
-    @Autowired //stiamo dichiarando che il controllore dipende da service, ovvero stiamo iniettando una dipendenza
-    public ErasmusDataController(ErasmusService service) {
-        this.service = service;
-    }
+    //@Autowired //stiamo dichiarando che il controllore dipende da service, ovvero stiamo iniettando una dipendenza
+    //public ErasmusDataController(ErasmusService service) {
+    //    this.service = service;
+    //}
 
     //metodi per la comunicazione con il client che gestiscono le richieste GET e POST
 

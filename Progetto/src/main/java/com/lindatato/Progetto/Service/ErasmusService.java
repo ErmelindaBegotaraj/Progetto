@@ -14,23 +14,27 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import org.springframework.stereotype.Service;
+
 import com.lindatato.Progetto.Utilities.*;
 //import com.sun.java.util.jar.pack.Package.Class.Field;
 import com.lindatato.Progetto.Model.*;
 
-@org.springframework.stereotype.Service
 
 /**
  * 
  * Classe che gestisce le operazioni di download e carica del dataset
  *
  */
+
+@Service
 public class ErasmusService {
 	
 	private DownloadAndParsing utilities;
 	private Metadata serviceMeta;
 	private Stats serviceStats;
 	private Filter serviceFilter;
+	private Vector<Erasmus> lista;
 	
 	/**
 	 * Costruttore che carica il dataset facendo il parsing
@@ -38,14 +42,24 @@ public class ErasmusService {
 	 */
 	public ErasmusService() {
 		
+		this.utilities = new DownloadAndParsing();
+		this.serviceMeta = new Metadata();
+		this.serviceStats = new Stats();
+		this.serviceFilter = new Filter();
+		
 		String serialFile= "prova4.txt";
+		String link="";
 		
 		if(Files.exists(Paths.get(serialFile))) {
-			SerialUpload(serialFile);
+			//SerialUpload(serialFile);
+			link = utilities.download();
+			lista = utilities.parsing(link);
 		} 
 		else {
-			DownloadAndParsing download = new DownloadAndParsing();
-			SerialSaving(serialFile);
+			//DownloadAndParsing download = new DownloadAndParsing();
+			link = utilities.download();
+			lista = utilities.parsing(link);
+			//SerialSaving(serialFile);
 		}
 	}
 	/**
@@ -57,7 +71,7 @@ public class ErasmusService {
 	}
 	
 	public Vector<Erasmus> getData() {
- 		return utilities.getData();
+ 		return this.lista;
 	}
 	
 	public Map<String, Object> getStats(String nomeCampo) {
@@ -120,7 +134,7 @@ public class ErasmusService {
 	public void SerialSaving(String file) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-			out.writeObject(utilities.getData());
+			out.writeObject(this.utilities.getData());
 			out.close();
 		} catch(IOException e) {
 			System.out.println("Errore di I/O");
@@ -135,8 +149,8 @@ public class ErasmusService {
 	 */
 	
 	public void SerialUpload(String file) {
-		Vector<Erasmus> lista = utilities.getData();
-		try {
+		//Vector<Erasmus> lista = utilities.getData();
+		/*try {
 			ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
 			lista = (Vector<Erasmus>) in.readObject();
 			in.close();
@@ -146,7 +160,7 @@ public class ErasmusService {
 		} catch(IOException e) {
 			System.out.println("Errore di I/O");
 			e.printStackTrace();
-		}
-	}
+		}*/
 
+	}
 }

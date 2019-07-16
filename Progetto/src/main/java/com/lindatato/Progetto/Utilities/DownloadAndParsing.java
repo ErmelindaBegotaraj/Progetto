@@ -19,11 +19,22 @@ import com.lindatato.Progetto.Model.Erasmus;
 public class DownloadAndParsing {
 	
 	private String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=erasmus-mobility-statistics-2011-12";
-	private Vector<Erasmus> erasmusList = new Vector<Erasmus>();
+	private Vector<Erasmus> erasmusList;
+	private int limit;
 	
 	private String link = "";
 	
 	public DownloadAndParsing() {
+		this.erasmusList = new Vector<Erasmus>();
+		this.limit = 500;
+	}
+	
+	public DownloadAndParsing(int limit) {
+		this.erasmusList = new Vector<Erasmus>();
+		this.limit = limit;
+	}
+	
+	public String download() {
 		try {
 			URLConnection openConnection = new URL(url).openConnection();  //crea una connesione tra applicazioe e url
 			openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
@@ -60,7 +71,10 @@ public class DownloadAndParsing {
 			e.printStackTrace();
 		}
 		System.out.println( "\nDownload completato." );
-		
+		return link;
+	}
+	
+	public Vector<Erasmus> parsing(String link) {
 		String line = "";
 	    String csvSplitBy = ";";
 	    BufferedReader br= null;
@@ -72,7 +86,7 @@ public class DownloadAndParsing {
 	    	br = new BufferedReader(new InputStreamReader(urlCSV.openStream()));
 	    	
 	    	while (((line = br.readLine()) != null) && !flag2) {
-	    		if (count==500) flag2= true;
+	    		if (count==this.limit) flag2= true;
 	    		if (!flag1) {flag1=true; continue;}
 	    		String[] valore = line.split(csvSplitBy);
 	    		erasmusList.add(new Erasmus (valore[0],valore[1],Integer.parseInt(valore[2]),valore[3],valore[4],Integer.parseInt(valore[5]),valore[6],Integer.parseInt(valore[7]),valore[8],valore[9],valore[10],
@@ -94,6 +108,7 @@ public class DownloadAndParsing {
 	   			}
 	   		}
 	   	}
+	    return erasmusList;
 	    /*System.out.println("Parsing completato.");
 	    for(Erasmus e : erasmusList)
 	    	System.out.println(e);*/
