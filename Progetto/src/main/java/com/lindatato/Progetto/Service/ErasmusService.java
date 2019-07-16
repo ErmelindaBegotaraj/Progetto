@@ -30,6 +30,7 @@ public class ErasmusService {
 	private DownloadAndParsing utilities;
 	private Metadata serviceMeta;
 	private Stats serviceStats;
+	private Filter serviceFilter;
 	
 	/**
 	 * Costruttore che carica il dataset facendo il parsing
@@ -37,7 +38,7 @@ public class ErasmusService {
 	 */
 	public ErasmusService() {
 		
-		String serialFile= "serial1.ser";
+		String serialFile= "prova4.txt";
 		
 		if(Files.exists(Paths.get(serialFile))) {
 			SerialUpload(serialFile);
@@ -97,13 +98,29 @@ public class ErasmusService {
 	}
 	
 	/**
+	 * Metodo che filtra i dati del csv
+	 * 
+	 * @param fieldName contiene il nome del campo richiesto
+	 * @param op contiene l'operatore che si vuole utilizzare
+	 * @param val valore di riferimento
+	 * @return lista filtrata
+	 */
+	public Collection getFilterData(String fieldName, String op, Object val) {
+		return serviceFilter.select(getData(), fieldName, op, val);
+	}
+	
+	public Map<String, Object> getFilterStats(String fieldName, String op, Object val) {
+		return (Map<String, Object>) serviceFilter.select((Collection) getStats(fieldName), fieldName, op, val);
+	}
+	
+	/**
 	 * Metodo che esegue il salvataggio della lista di oggetti dopo aver effettuato il parsing
 	 * @param file nome del file cache da creare
 	 */
 	public void SerialSaving(String file) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-			out.writeObject(utilities.getList());
+			out.writeObject(utilities.getData());
 			out.close();
 		} catch(IOException e) {
 			System.out.println("Errore di I/O");
@@ -118,9 +135,9 @@ public class ErasmusService {
 	 */
 	
 	public void SerialUpload(String file) {
+		Vector<Erasmus> lista = utilities.getData();
 		try {
 			ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-			Vector<Erasmus> lista = null;
 			lista = (Vector<Erasmus>) in.readObject();
 			in.close();
 		} catch(ClassNotFoundException e) {
