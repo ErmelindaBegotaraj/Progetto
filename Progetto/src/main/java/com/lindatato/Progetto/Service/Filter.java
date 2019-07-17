@@ -41,7 +41,7 @@ public class Filter {
 			Double rifN = ((Number)rif).doubleValue();
 			Double valN = ((Number)val).doubleValue();
 			if(op.equals("&eq"))
-					return valN == rifN;
+					return valN.equals(rifN);
 				else if(op.equals("&not"))
 							return valN != rifN;
 						else if (op.equals("&gt"))
@@ -53,7 +53,6 @@ public class Filter {
 												else if (op.equals("&lte"))
 															return valN <= rifN;
 														else {
-															//System.err.println("Operatore non valido.");
 															throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 														}	
 		}
@@ -66,8 +65,7 @@ public class Filter {
 				else if(op.equals("&not"))
 							return !(valS.equals(rifS));
 						else {
-							System.err.println("Operatore non valido.");
-							return false;
+							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 						}
 		}
 		
@@ -85,8 +83,7 @@ public class Filter {
 					else if(op.equals("&nin"))
 								return !rifL.contains(rifS);
 							else {
-								System.err.println("Operatore non valido.");
-								return false;
+								throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 							}
 			}
 			else {
@@ -109,8 +106,7 @@ public class Filter {
 					else if(op.equals("&nin"))
 							return !rifL.contains(rifN);
 							else {
-								System.err.println("Operatore non valido.");
-								return false;
+								throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 							}
 			}
 			else {

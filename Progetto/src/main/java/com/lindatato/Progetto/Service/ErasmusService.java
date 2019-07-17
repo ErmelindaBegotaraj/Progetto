@@ -71,7 +71,7 @@ public class ErasmusService {
 	}
 	
 	public Map<String, Object> getStats(String nomeCampo, List lista) {
-		return serviceStats.getStats(nomeCampo, lista);
+		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, lista));
 	}
 	
 	/**
@@ -80,11 +80,11 @@ public class ErasmusService {
 	 * @param list lista che si ottiene dopo aver effettuato il parsing, vettore di oggetti "Erasmus"
 	 * @return la lista che contiene i valori di un determinato campo
 	 */
-	public List fieldValues(String fieldName, List<Erasmus> list) {
+	public List fieldValues(String fieldName, List list) {
 		List<Object> values = new ArrayList<>();
 		try {
 			Field[] fields = Erasmus.class.getDeclaredFields();
-			for(Erasmus e : list) {
+			for(Object e : list) {
 				for(int i=0; i < fields.length; i++) {
 					if(fieldName.equals(fields[i].getName())) { 
 						//	values.add(e.getClass().getMethod(fields[i].getName()));
