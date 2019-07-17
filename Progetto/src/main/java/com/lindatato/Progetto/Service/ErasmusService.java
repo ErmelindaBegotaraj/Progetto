@@ -34,7 +34,7 @@ public class ErasmusService {
 	private Metadata serviceMeta;
 	private Stats serviceStats;
 	private Filter serviceFilter;
-	private Vector<Erasmus> lista;
+	private List<Erasmus> lista;
 	
 	/**
 	 * Costruttore che carica il dataset facendo il parsing
@@ -50,17 +50,8 @@ public class ErasmusService {
 		String serialFile= "prova4.txt";
 		String link="";
 		
-		if(Files.exists(Paths.get(serialFile))) {
-			//SerialUpload(serialFile);
-			link = utilities.download();
-			lista = utilities.parsing(link);
-		} 
-		else {
-			//DownloadAndParsing download = new DownloadAndParsing();
-			link = utilities.download();
-			lista = utilities.parsing(link);
-			//SerialSaving(serialFile);
-		}
+		link = utilities.download();
+		lista = utilities.parsing(link);
 	}
 	
 	/**
@@ -71,12 +62,16 @@ public class ErasmusService {
 		return serviceMeta.getMetadata();
 	}
 	
-	public Vector<Erasmus> getData() {
+	public List<Erasmus> getData() {
  		return this.lista;
 	}
 	
 	public Map<String, Object> getStats(String nomeCampo) {
 		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, getData()));
+	}
+	
+	public Map<String, Object> getStats(String nomeCampo, List lista) {
+		return serviceStats.getStats(nomeCampo, lista);
 	}
 	
 	/**
@@ -85,7 +80,7 @@ public class ErasmusService {
 	 * @param list lista che si ottiene dopo aver effettuato il parsing, vettore di oggetti "Erasmus"
 	 * @return la lista che contiene i valori di un determinato campo
 	 */
-	public List fieldValues(String fieldName, Vector<Erasmus> list) {
+	public List fieldValues(String fieldName, List<Erasmus> list) {
 		List<Object> values = new ArrayList<>();
 		try {
 			Field[] fields = Erasmus.class.getDeclaredFields();
@@ -121,48 +116,11 @@ public class ErasmusService {
 	 * @param val valore di riferimento
 	 * @return lista filtrata
 	 */
-	public Collection getFilterData(String fieldName, String op, Object val) {
-		return serviceFilter.select(getData(), fieldName, op, val);
+	public List<Erasmus> getFilterData(String fieldName, String op, Object rif) {
+		return this.serviceFilter.select(getData(), fieldName, op, rif);
 	}
 	
 	public Map<String, Object> getFilterStats(String fieldName, String op, Object val) {
-		return (Map<String, Object>) serviceFilter.select((Collection) getStats(fieldName), fieldName, op, val);
-	}
-	
-	/**
-	 * Metodo che esegue il salvataggio della lista di oggetti dopo aver effettuato il parsing
-	 * @param file nome del file cache da creare
-	 */
-	public void SerialSaving(String file) {
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-			out.writeObject(this.utilities.getData());
-			out.close();
-		} catch(IOException e) {
-			System.out.println("Errore di I/O");
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Metodo che esegue il caricamento della lista di oggetti su quali è stato 
-	 * effettuato precedentemente il parsing
-	 * @param file nome del file da leggere
-	 */
-	
-	public void SerialUpload(String file) {
-		//Vector<Erasmus> lista = utilities.getData();
-		/*try {
-			ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-			lista = (Vector<Erasmus>) in.readObject();
-			in.close();
-		} catch(ClassNotFoundException e) {
-			System.out.println("Manca oggetto nel file");
-			e.printStackTrace();
-		} catch(IOException e) {
-			System.out.println("Errore di I/O");
-			e.printStackTrace();
-		}*/
-
+		return (Map<String, Object>) this.serviceFilter.select((List) getStats(fieldName), fieldName, op, val);
 	}
 }

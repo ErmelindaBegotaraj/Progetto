@@ -9,6 +9,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.lindatato.Progetto.Model.Erasmus;
 
 /**
@@ -18,7 +21,10 @@ import com.lindatato.Progetto.Model.Erasmus;
  */
 
 public class Filter {
-	private static final List<String> operatori = Arrays.asList("&gt","$gte","&lt","&lte","&eq","&not","&in","&nin");
+	//private static final List<String> operatori = Arrays.asList("&gt","$gte","&lt","&lte","&eq","&not","&in","&nin");
+	private Object rif;
+	private String op;
+	private String fieldName;
 	
 	/**
 	 * Metodo che controlla se l'oggetto passato è un numero, una stringa o una lista e confronta tramite gli operatori logici e condizionali val e rif
@@ -30,14 +36,10 @@ public class Filter {
 	public static boolean check(Object val, String op, Object rif) {
 		
 		// casting variabili
-		Double rifN = ((Number)rif).doubleValue();
-		Double valN = ((Number)val).doubleValue();
-		String rifS = ((String)rif);
-		String valS = ((String)val);
-		List rifL = (List)rif;
 		
 		if(rif instanceof Number && val instanceof Number) {
-			
+			Double rifN = ((Number)rif).doubleValue();
+			Double valN = ((Number)val).doubleValue();
 			if(op.equals("&eq"))
 					return valN == rifN;
 				else if(op.equals("&not"))
@@ -51,17 +53,18 @@ public class Filter {
 												else if (op.equals("&lte"))
 															return valN <= rifN;
 														else {
-															System.err.println("Operatore non valido.");
-															return false;
+															//System.err.println("Operatore non valido.");
+															throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 														}	
 		}
 		
 		else if(rif instanceof String && val instanceof String) {
-			
+			String rifS = ((String)rif);
+			String valS = ((String)val);
 			if(op.equals("&eq"))
-					return val.equals(rif);
+					return valS.equals(rifS);
 				else if(op.equals("&not"))
-							return valS != rifS;
+							return !(valS.equals(rifS));
 						else {
 							System.err.println("Operatore non valido.");
 							return false;
@@ -69,7 +72,9 @@ public class Filter {
 		}
 		
 		else if(rif instanceof List && val instanceof String) {
-			
+			List rifL = (List)rif;
+			String rifS = ((String)rif);
+			String valS = ((String)val);
 			if(!rifL.isEmpty() && rifL.get(0) instanceof String) {
 				List<String> stringList = new ArrayList<>();  // crea una nuova lista di stringhe
 				for(Object str : rifL) {
@@ -78,7 +83,7 @@ public class Filter {
 				if(op.equals("&in"))
 						return rifL.contains(rifS);
 					else if(op.equals("&nin"))
-								return rifL.contains(rifS);
+								return !rifL.contains(rifS);
 							else {
 								System.err.println("Operatore non valido.");
 								return false;
@@ -91,7 +96,9 @@ public class Filter {
 		}
 		
 		else if(rif instanceof List && val instanceof Number) {
-			
+			List rifL = (List)rif;
+			Double rifN = ((Number)rif).doubleValue();
+			Double valN = ((Number)val).doubleValue();
 			if(!rifL.isEmpty() && rifL.get(0) instanceof Number) {
 				List<Number> numberList = new ArrayList<>();  // crea una nuova lista di numeri
 				for(Object num : rifL) {
@@ -118,9 +125,9 @@ public class Filter {
 		}
 	}
 	
-	public Collection select(Collection src, String fieldName, String op, Object val) {
-		Collection<Object> list = new ArrayList<Object>();
-		for(Object obj : src) {
+	public List<Erasmus> select(List<Erasmus> src, String fieldName, String op, Object rif) {
+		List<Erasmus> list = new ArrayList<Erasmus>();
+		for(Erasmus obj : src) {
 			
 			try {
 				
@@ -128,9 +135,9 @@ public class Filter {
 				Object tmp = null;
 					for(int i=0; i<fields.length; i++) {
 						if(fields[i].getName().equals(fieldName)) {
-						Method m = obj.getClass().getMethod(fields[i].getName());
+						Method m = obj.getClass().getMethod("get" + fields[i].getName());
 								tmp = m.invoke(obj);
-						if(Filter.check(tmp, op, val))
+						if(Filter.check(tmp, op, rif))
 							list.add(obj);
 							}
 						
@@ -149,5 +156,17 @@ public class Filter {
 			}
 		}
 		return list;
+	}
+	
+	public Object getRif() {
+		return rif;
+	}
+	
+	public String getOp() {
+		return op;
+	}
+	
+	public String getFieldName() {
+		return fieldName;
 	}
 }

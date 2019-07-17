@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public class ErasmusDataController {
      */
 
     @GetMapping("/stats")
-    public List getStats(@RequestParam(value = "field", defaultValue = "") String fieldName) {
+    public List<Map> getStats(@RequestParam(value = "field", defaultValue = "") String fieldName) {
     	Field[] fields = Erasmus.class.getDeclaredFields();
     	List<Map> list = new ArrayList<>();
     	if(fieldName.equals("")) {
@@ -76,4 +77,16 @@ public class ErasmusDataController {
     	}
 	}
     
+    @PostMapping("/filter")
+    public List getFilter(@RequestParam(value = "field", defaultValue="") String fieldName, @RequestBody Filter req) {
+    	List<Map> listaStats = new ArrayList<>();
+    	List listaFiltrata = service.getFilterData(req.getFieldName(), req.getOp(), req.getRif());
+    	if(fieldName.equals("")) {
+    		return listaFiltrata;
+    	}
+    	else {
+    		listaStats.add(service.getStats(fieldName, listaFiltrata));
+    		return listaStats;
+    	}
+    }
 }

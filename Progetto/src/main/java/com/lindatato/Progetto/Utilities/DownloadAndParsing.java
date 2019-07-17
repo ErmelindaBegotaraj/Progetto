@@ -19,13 +19,13 @@ import com.lindatato.Progetto.Model.Erasmus;
 public class DownloadAndParsing {
 	
 	private String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=erasmus-mobility-statistics-2011-12";
-	private Vector<Erasmus> erasmusList;
+	private List<Erasmus> erasmusList;
 	private int limit;
 	
 	private String link = "";
 	
 	public DownloadAndParsing() {
-		this.erasmusList = new Vector<Erasmus>();
+		this.erasmusList = new ArrayList<Erasmus>();
 		this.limit = 500;
 	}
 	
@@ -74,7 +74,7 @@ public class DownloadAndParsing {
 		return link;
 	}
 	
-	public Vector<Erasmus> parsing(String link) {
+	public List<Erasmus> parsing(String link) {
 		String line = "";
 	    String csvSplitBy = ";";
 	    BufferedReader br= null;
@@ -115,7 +115,7 @@ public class DownloadAndParsing {
 	    return erasmusList;
 	}
 	
-	public Vector<Erasmus> getData(){
+	public List<Erasmus> getData(){
 		return erasmusList;
 	}
 }
