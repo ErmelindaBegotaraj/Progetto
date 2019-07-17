@@ -26,9 +26,9 @@ public class ErasmusDataController {
      * @param service riferimento all'istanza del service inizializzata da Spring
      */
     //@Autowired //stiamo dichiarando che il controllore dipende da service, ovvero stiamo iniettando una dipendenza
-    //public ErasmusDataController(ErasmusService service) {
-    //    this.service = service;
-    //}
+    public ErasmusDataController(ErasmusService service) {
+        this.service = service;
+    }
 
     //metodi per la comunicazione con il client che gestiscono le richieste GET e POST
 
@@ -66,7 +66,7 @@ public class ErasmusDataController {
     	List<Map> list = new ArrayList<>();
     	if(fieldName.equals("")) {
     		for(int i=0; i < fields.length; i++) {
-    			list.add(service.getStats(fieldName));		
+    			list.add(service.getStats(fields[i].getName()));		
     		}
     		return list;
     	}

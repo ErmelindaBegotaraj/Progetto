@@ -79,7 +79,7 @@ public class DownloadAndParsing {
 	    String csvSplitBy = ";";
 	    BufferedReader br= null;
 	    boolean flag1= false, flag2= false;
-	    int count= 0;
+	    int count = 1;
 	    
 	    try {
 	    	URL urlCSV = new URL(link);
@@ -108,10 +108,11 @@ public class DownloadAndParsing {
 	   			}
 	   		}
 	   	}
+	    System.out.println("Parsing completato.\n");
+	    
+	    /*for(Erasmus e : erasmusList)
+    	System.out.println(e);*/
 	    return erasmusList;
-	    /*System.out.println("Parsing completato.");
-	    for(Erasmus e : erasmusList)
-	    	System.out.println(e);*/
 	}
 	
 	public Vector<Erasmus> getData(){

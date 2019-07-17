@@ -60,7 +60,7 @@ public class Stats {
 	public static double min(List<Number> lista) {
 		double min = lista.get(0).doubleValue();  //assegna il primo valore della lista a min
 		for(Number numero : lista) {
-			if(numero.doubleValue() > min) min = numero.doubleValue();  //scorre la lista e verifica se il valore dell'indice corrispondente � minore di min
+			if(numero.doubleValue() < min) min = numero.doubleValue();  //scorre la lista e verifica se il valore dell'indice corrispondente � minore di min
 		}
 		return min;
 	}
@@ -134,7 +134,7 @@ public class Stats {
 	 * @param
 	 * @return
 	 */
-	public static Map<String, Object> getStats(String campo, List lista) {
+	public Map<String, Object> getStats(String campo, List<Object> lista) {
 		Map<String, Object> mappa = new HashMap<>();
 		if(!lista.isEmpty()) {
 			if (lista.get(0) instanceof Number) {

@@ -62,6 +62,7 @@ public class ErasmusService {
 			//SerialSaving(serialFile);
 		}
 	}
+	
 	/**
 	 * Metodo che restituisce i metadati del file CSV
 	 * @return la lista contenente i metadati
@@ -92,8 +93,9 @@ public class ErasmusService {
 				for(int i=0; i < fields.length; i++) {
 					if(fieldName.equals(fields[i].getName())) { 
 						//	values.add(e.getClass().getMethod(fields[i].getName()));
-						Method m = e.getClass().getMethod(fields[i].getName());
-						values.add(m.invoke(e));
+						Method m = e.getClass().getMethod("get"+fields[i].getName());
+						Object val = m.invoke(e);
+						values.add(val);
 					}
 				}
 			}
