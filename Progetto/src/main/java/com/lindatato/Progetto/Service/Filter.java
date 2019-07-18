@@ -68,7 +68,6 @@ public class Filter {
 		
 		else if(rif instanceof List && val instanceof String) {
 			List rifL = (List)rif;
-			String rifS = ((String)rif);
 			String valS = ((String)val);
 			if(!rifL.isEmpty() && rifL.get(0) instanceof String) {
 				List<String> stringList = new ArrayList<>();  // crea una nuova lista di stringhe
@@ -76,22 +75,20 @@ public class Filter {
 					stringList.add((String)str);  // scorre un ciclo for per effettuare il casting su ogni elemento della lista
 				}
 				if(op.equals("&in"))
-						return rifL.contains(rifS);
+						return rifL.contains(valS);
 					else if(op.equals("&nin"))
-								return !rifL.contains(rifS);
+								return !rifL.contains(valS);
 							else {
 								throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 							}
 			}
 			else {
-				System.err.println("La lista potrebbe essere vuota o contenere elementi non validi.");
-				return false;
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La lista potrebbe essere vuota o contenere elementi non validi.");
 			}
 		}
 		
 		else if(rif instanceof List && val instanceof Number) {
 			List rifL = (List)rif;
-			Double rifN = ((Number)rif).doubleValue();
 			Double valN = ((Number)val).doubleValue();
 			if(!rifL.isEmpty() && rifL.get(0) instanceof Number) {
 				List<Number> numberList = new ArrayList<>();  // crea una nuova lista di numeri
@@ -99,22 +96,19 @@ public class Filter {
 					numberList.add((Number)num);  // scorre un ciclo for per effettuare il casting su ogni elemento della lista
 				}
 				if(op.equals("&in"))
-						return rifL.contains(rifN);
+						return rifL.contains(valN);
 					else if(op.equals("&nin"))
-							return !rifL.contains(rifN);
+							return !rifL.contains(valN);
 							else {
 								throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 							}
 			}
 			else {
-				System.err.println("La lista potrebbe essere vuota o contenere elementi non validi.");
-				return false;
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La lista potrebbe essere vuota o contenere elementi non validi.");
 			}
 		}
 		else {
-			System.err.println("Elementi non validi");
-				return false;
-		
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Elementi non validi.");
 		}
 	}
 	
