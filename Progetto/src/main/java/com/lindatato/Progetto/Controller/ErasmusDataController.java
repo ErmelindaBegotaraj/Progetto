@@ -3,7 +3,9 @@ package com.lindatato.Progetto.Controller;
 import com.lindatato.Progetto.Model.Erasmus;
 import com.lindatato.Progetto.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -76,22 +78,39 @@ public class ErasmusDataController {
 	}
     
     /**
-     * Metodo che gestisce la richiesta POST alla rotta "/filter" e che restituisce i dati filtrati se non specifichiamo il nome del campo, e restituisce le statistiche filtrate se specifichiamo il nome del campo 
+     * Metodo che gestisce la richiesta POST alla rotta "/filter" e che restituisce i dati filtrati 
      * 
-     * @param fieldName nome del campo
      * @param req oggetto di tipo Filter al quale vengono passati i valori del body tramite una chiamata POST
-     * @return lista dei dati o delle statistiche opportunamente filtrati
+     * @return lista dei dati opportunamente filtrati
      */
-    @PostMapping("/filter")
-    public List getFilter(@RequestParam(value = "field", defaultValue="") String fieldName, @RequestBody Filter req) {
+    @PostMapping("/data")
+    public List getFilterData(@RequestBody Filter req) {
+    	return service.getFilterData(req.getFieldName(), req.getOp(), req.getRif());
+    }
+    
+    /**
+     * Metodo che restituisce la richiesta POST alla rotta "/stats" e che restituisce le statistiche dei dati filtrati se non si specifica
+     * il nome del campo, oppure, se lo si specifica, restituisce le statistiche dei dati filtrati solo del campo desiderato
+     * 
+     * @param fieldName nome del campo del quale si vogliono calcolare le statistiche
+     * @param req oggetto di tipo Filter al quale vengono passati i valori del body tramite una chiamata POST
+     * @return lista delle statistiche dei dati filtrati
+     */
+    @PostMapping("/stats")
+    public List<Map> getFilterStats(@RequestParam(value = "field", defaultValue = "") String fieldName, @RequestBody Filter req) {
     	List<Map> listaStats = new ArrayList<>();
     	List listaFiltrata = service.getFilterData(req.getFieldName(), req.getOp(), req.getRif());
-    	if(fieldName.equals("")) {  // se il nome del campo non è specificato restituisce i dati filtrati
-    		return listaFiltrata;
-    	}
-    	else {  // altrimenti restituisce le statistiche filtratte del relativo campo
-    		listaStats.add(service.getStats(fieldName, listaFiltrata));
+    	Field[] fields = Erasmus.class.getDeclaredFields();
+    	// se non specifico il nome del campo, mi restituisce le statistiche di tutti gli attributi Erasmus dei dati filtrati secondo i parametri passati nel body
+    	if(fieldName.equals("")) {
+    		for(int i=0; i < fields.length; i++) {
+    			listaStats.add(service.getStats(fields[i].getName(), listaFiltrata));		
+    		}
     		return listaStats;
     	}
+    	else {  // altrimenti restituisce solo quelli del parametro specificato
+    		listaStats.add(service.getStats(fieldName, listaFiltrata));
+    	}
+		return listaStats;
     }
 }

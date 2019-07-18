@@ -74,10 +74,11 @@ public class Filter {
 				for(Object str : rifL) {
 					stringList.add((String)str);  // scorre un ciclo for per effettuare il casting su ogni elemento della lista
 				}
+				// operatori utilizzati
 				if(op.equals("&in"))
-						return rifL.contains(valS);
+						return stringList.contains(valS);
 					else if(op.equals("&nin"))
-								return !rifL.contains(valS);
+								return !stringList.contains(valS);
 							else {
 								throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 							}
@@ -91,14 +92,19 @@ public class Filter {
 			List rifL = (List)rif;
 			Double valN = ((Number)val).doubleValue();
 			if(!rifL.isEmpty() && rifL.get(0) instanceof Number) {
-				List<Number> numberList = new ArrayList<>();  // crea una nuova lista di numeri
+				List<Double> numberList = new ArrayList<>();  // crea una nuova lista di numeri
 				for(Object num : rifL) {
-					numberList.add((Number)num);  // scorre un ciclo for per effettuare il casting su ogni elemento della lista
+					numberList.add(((Number)num).doubleValue());  // scorre un ciclo for per effettuare il casting su ogni elemento della lista
 				}
 				if(op.equals("&in"))
-						return rifL.contains(valN);
+						return numberList.contains(valN);
 					else if(op.equals("&nin"))
-							return !rifL.contains(valN);
+							return !numberList.contains(valN);
+							else if(op.equals("&bt")) {
+								double sup = numberList.get(1);
+								double inf = numberList.get(0);
+								return valN <= sup && valN >=inf;
+							}
 							else {
 								throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Operatore non valido.");
 							}
