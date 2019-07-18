@@ -20,4 +20,6 @@
 <p><em>Service</em> è utile nell’implementazione di metodi che gestiscono l’accesso a dati, metadati, statistiche e filtri.</p>
 <p><em>Utilities</em> include la classe che permette di fare il download e il parsing del file CSV.</p>
 <h2 id="diagrammi">Diagrammi</h2>
+<h3 id="diagramma-dei-casi-duso">Diagramma dei casi d’uso</h3>
+<p><img src="https://github.com/ErmelindaBegotaraj/FirstProject/blob/master/casi%20d%27uso.jpg" alt=""></p>
 
