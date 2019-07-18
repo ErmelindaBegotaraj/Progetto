@@ -15,7 +15,42 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 	
 	private double LengthStudyPeriod,LengthPlacement,PlacementGrant,StudyGrant,SnSupplement;
 	
-	//Costruttore della classe
+	/**
+	 * Costruttore della classe
+	 * 
+	 * @param homeInstitution
+	 * @param country
+	 * @param age
+	 * @param gender
+	 * @param nationality
+	 * @param subjectArea
+	 * @param levelStudy
+	 * @param yearsPrior
+	 * @param mobilityType
+	 * @param hostInstitution
+	 * @param countryCodeOfHostInstitution
+	 * @param placementEnterprise
+	 * @param countryOfPlacement
+	 * @param enterpriseSize
+	 * @param typePlacementSector
+	 * @param lengthStudyPeriod
+	 * @param lengthPlacement
+	 * @param shortDuration
+	 * @param studyStartDate
+	 * @param placementStartDate
+	 * @param consortiumAgreementNumber
+	 * @param ectsCreditsStudy
+	 * @param ectsCreditsPlacement
+	 * @param totalEcts
+	 * @param snSupplement
+	 * @param taughtHostLang
+	 * @param languageTaught
+	 * @param lingPreparation
+	 * @param studyGrant
+	 * @param placementGrant
+	 * @param previousParticipation
+	 * @param qualificationAtHost
+	 */
 
 	public Erasmus(String homeInstitution, String country, int age, String gender, String nationality, int subjectArea, String levelStudy,
 			int yearsPrior, String mobilityType, String hostInstitution, String countryCodeOfHostInstitution, String placementEnterprise,
@@ -107,7 +142,7 @@ public class Erasmus implements Serializable { //Serializable permette di salvar
 		return LanguageTaught;
 	}
 
-	public String getLIngPreparation() {
+	public String getLingPreparation() {
 		return LingPreparation;
 	}
 

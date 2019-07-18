@@ -16,13 +16,23 @@ import org.json.simple.parser.ParseException;
 
 import com.lindatato.Progetto.Model.Erasmus;
 
+/**
+ * 
+ * Classe che racchiude i metodi per il download del dataset e il parsing del file csv contenuto nell'url del dataset
+ * 
+ */
+
 public class DownloadAndParsing {
 	
-	private String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=erasmus-mobility-statistics-2011-12";
 	private List<Erasmus> erasmusList;
 	private int limit;
-	
 	private String link = "";
+	
+	/**
+	 * Due tipi di costruttori permettono la lettura controllata del dataset. Nel primo caso si inizializza la variabile limit a 500,
+	 * nel secondo si passa al costruttore il parametro contenente il valore del limite desiderato.
+	 * 
+	 */
 	
 	public DownloadAndParsing() {
 		this.erasmusList = new ArrayList<Erasmus>();
@@ -34,7 +44,14 @@ public class DownloadAndParsing {
 		this.limit = limit;
 	}
 	
-	public String download() {
+	/**
+	 * Metodo che effettua il download del dataset estraendo il link del csv 
+	 * 
+	 * @param url stringa che contiene l'url del dataset assegnatoci
+	 * @return ritorna una stringa contenuta il link url del csv
+	 */
+	
+	public String download(String url) {
 		try {
 			URLConnection openConnection = new URL(url).openConnection();  //crea una connesione tra applicazioe e url
 			openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
@@ -46,22 +63,22 @@ public class DownloadAndParsing {
 			   InputStreamReader inputReader = new InputStreamReader(input);  //legge i byte e li decodifica in caratteri
 			   BufferedReader br = new BufferedReader(inputReader);  //legge un file di testo
 			   
-			   while ((line = br.readLine())!=null) {
+			   while ((line = br.readLine())!=null) {  // legge finchè il file è vuoto
 				   data += line;
-				   //System.out.println(line);
+				   //System.out.println(line);  //stampa il dataset in una righa per il debug
 			   }
 			 } finally {
 			   input.close();
 			 }
 			 
 			 JSONObject object = (JSONObject) JSONValue.parseWithException(data); 
-			 JSONObject objectI = (JSONObject) (object.get("result"));
-			 JSONArray objectArray = (JSONArray) (objectI.get("resources"));
+			 JSONObject objectI = (JSONObject) (object.get("result"));  // assegna alla variabile objectI il json del dataset denominato result
+			 JSONArray objectArray = (JSONArray) (objectI.get("resources"));  // assegna al vettore json objectArray il valore di resources che contiene l'url del csv da estrarre
 					 
 			 for(Object obj : objectArray) {
 				 if (obj instanceof JSONObject) {
 					 JSONObject obj1 = (JSONObject)obj;
-					if(((String)obj1.get("format")).toLowerCase().contains("csv") && ((String)obj1.get("url")).contains("student"))
+					if(((String)obj1.get("format")).toLowerCase().contains("csv") && ((String)obj1.get("url")).contains("student"))  // estrae il csv desiderato verificando la presenza della stringa student nell'url che si vuole estrarre
 						 link = (String)obj1.get("url");
 				 }
 			 }			
@@ -74,9 +91,16 @@ public class DownloadAndParsing {
 		return link;
 	}
 	
+	/**
+	 * Metodo che effettua il parsing del file csv estratto precedentemente col metodo download
+	 * 
+	 * @param link contiene l'url del csv
+	 * @return lista di oggetti Erasmus con i relativi attributi contenenti i valori del dataset
+	 */
+	
 	public List<Erasmus> parsing(String link) {
 		String line = "";
-	    String csvSplitBy = ";";
+	    String csvSplitBy = ";";  // carattere che divide i valori del csv
 	    BufferedReader br= null;
 	    boolean flag1= false, flag2= false;
 	    int count = 1;
@@ -86,9 +110,9 @@ public class DownloadAndParsing {
 	    	br = new BufferedReader(new InputStreamReader(urlCSV.openStream()));
 	    	
 	    	while (((line = br.readLine()) != null) && !flag2) {
-	    		if (count==this.limit) flag2= true;
-	    		if (!flag1) {flag1=true; continue;}
-	    		String[] valore = line.split(csvSplitBy);
+	    		if (count==this.limit) flag2= true;  // esce dal ciclo quando la variabile count è uguale a limit
+	    		if (!flag1) {flag1=true; continue;}  // permette di saltare la prima riga del csv
+	    		String[] valore = line.split(csvSplitBy);  // dopo aver letto una riga del csv la divide ogni volta che trova un carattere ";"
 	    		erasmusList.add(new Erasmus (valore[0],valore[1],Integer.parseInt(valore[2]),valore[3],valore[4],Integer.parseInt(valore[5]),valore[6],Integer.parseInt(valore[7]),valore[8],valore[9],valore[10],
     									valore[11],valore[12],valore[13],valore[14],Double.parseDouble(valore[15]),Double.parseDouble(valore[16]),valore[17],valore[18],valore[19],valore[20],
     									Integer.parseInt(valore[21]),Integer.parseInt(valore[22]),Integer.parseInt(valore[23]),Double.parseDouble(valore[24]),valore[25],valore[26],valore[27],
@@ -110,10 +134,14 @@ public class DownloadAndParsing {
 	   	}
 	    System.out.println("Parsing completato.\n");
 	    
+	    // stampa la lista Erasmus per il debug
+	    
 	    /*for(Erasmus e : erasmusList)
     	System.out.println(e);*/
 	    return erasmusList;
 	}
+	
+	// Metodo che restituisce la lista Erasmus in alternativa al metodo parsing
 	
 	public List<Erasmus> getData(){
 		return erasmusList;

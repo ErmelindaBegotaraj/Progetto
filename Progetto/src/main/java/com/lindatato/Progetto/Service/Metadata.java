@@ -25,7 +25,6 @@ public class Metadata {
             //andiamo ad inserire le coppie chiave/valore
             map.put("alias", f.getName());
             map.put("sourceField", f.getName().toUpperCase());//nome del campo in csv
-            //touppercase serve per convertire il nome in maiuscolo
             map.put("type", f.getType().getSimpleName());
             metadata.add(map);
             
@@ -33,6 +32,12 @@ public class Metadata {
 
         }
         
+	/**
+	 * Metodo che ritorna la lista di mappe contenente i metadati
+	 * 
+	 * @return lista dei metadati
+	 */
+	
 	public List<Map> getMetadata() {
 		return metadata;
 		}

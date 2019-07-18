@@ -131,19 +131,23 @@ public class Stats {
 	/**
 	 * Metodo che serve a visualizzare il tipo di statistiche in base al campo specificato
 	 * 
-	 * @param
+	 * @param campo contiene il nome dell'attributo del quale si vogliono si vogliono calcolare le statistiche 
+	 * @param lista contiene la lista dei valori utili per il calcolo delle statistiche
 	 * @return
 	 */
+	
 	public Map<String, Object> getStats(String campo, List<Object> lista) {
 		Map<String, Object> mappa = new HashMap<>();
 		if(!lista.isEmpty()) {
-			if (lista.get(0) instanceof Number) {
+			 // se il primo valore è un numero crea una lista di numeri e gli passa i valori della lista castati a Number
+			if (lista.get(0) instanceof Number) { 
 				List<Number> numList = new ArrayList<>();
 				for (Object elem : lista) {
 					numList.add(((Number) elem));
 				}
-				mappa = NumStats(campo, numList);
+				mappa = NumStats(campo, numList); // calcola le statistiche numeriche
 			}
+			// se il primo valore non è un numero calcola le statistiche per le stringhe
 			else {
 				mappa = StrStats(campo, lista);
 			}

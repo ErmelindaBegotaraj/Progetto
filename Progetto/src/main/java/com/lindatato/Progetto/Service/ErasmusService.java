@@ -1,35 +1,27 @@
 package com.lindatato.Progetto.Service;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
 
 import com.lindatato.Progetto.Utilities.*;
-//import com.sun.java.util.jar.pack.Package.Class.Field;
 import com.lindatato.Progetto.Model.*;
 
 
 /**
  * 
- * Classe che gestisce le operazioni di download e carica del dataset
+ * Classe che gestisce le operazioni di download e carica del dataset e che mette in comunicazione tutte le le classi con il controlle
+ * attraverso metodi opportunamente costruiti
  *
  */
 
 @Service
 public class ErasmusService {
 	
+	private String url = "http://data.europa.eu/euodp/data/api/3/action/package_show?id=erasmus-mobility-statistics-2011-12";
 	private DownloadAndParsing utilities;
 	private Metadata serviceMeta;
 	private Stats serviceStats;
@@ -37,8 +29,8 @@ public class ErasmusService {
 	private List<Erasmus> lista;
 	
 	/**
-	 * Costruttore che carica il dataset facendo il parsing
-	 * oppure, se il file è già stato creato, ricarica il parsing precedente
+	 * Costruttore che effettua al primo avvio dell'applicazione il download e il parsing dei dati che restituiscono i valori del file csv
+	 * 
 	 */
 	public ErasmusService() {
 		
@@ -47,10 +39,9 @@ public class ErasmusService {
 		this.serviceStats = new Stats();
 		this.serviceFilter = new Filter();
 		
-		String serialFile= "prova4.txt";
 		String link="";
 		
-		link = utilities.download();
+		link = utilities.download(url);
 		lista = utilities.parsing(link);
 	}
 	
@@ -62,14 +53,29 @@ public class ErasmusService {
 		return serviceMeta.getMetadata();
 	}
 	
+	/**
+	 * Metodo che restituisce i dati del file csv
+	 * @return lista dei dati csv
+	 */
 	public List<Erasmus> getData() {
  		return this.lista;
 	}
 	
+	/**
+	 * Metodo che restituisce le statistiche di un dato attributo
+	 * @param nomeCampo contiene il valore dell'attributo del quale si vogliono calcolare le statistiche
+	 * @return map delle statistiche desiderate
+	 */
 	public Map<String, Object> getStats(String nomeCampo) {
 		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, getData()));
 	}
 	
+	/**
+	 * Metodo che restituisce le statistiche di un dato campo di una lista passatagli come parametro (si utilizza per filtrare le statistiche)
+	 * @param nomeCampo contiene il valore del campo del quale si vogliono calcolare le statistiche
+	 * @param lista contiene la lista dalla quale estrarre poi le statistiche di quel campo
+	 * @return map delle statistiche desiderate (quelle filtrate)
+	 */
 	public Map<String, Object> getStats(String nomeCampo, List lista) {
 		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, lista));
 	}
@@ -85,12 +91,12 @@ public class ErasmusService {
 		try {
 			Field[] fields = Erasmus.class.getDeclaredFields();
 			for(Object e : list) {
+				// scorre il vettore di campi e controlla se il nome del campo corrispondente è uguale a quello passatogli come parametro 
 				for(int i=0; i < fields.length; i++) {
-					if(fieldName.equals(fields[i].getName())) { 
-						//	values.add(e.getClass().getMethod(fields[i].getName()));
+					if(fieldName.equals(fields[i].getName())) {
 						Method m = e.getClass().getMethod("get"+fields[i].getName());
 						Object val = m.invoke(e);
-						values.add(val);
+						values.add(val); // se il controllo restituisce vero, aggiunge alla lista il valore dell'ogetto della lista passatagli come parametro ottenuto con il metodo getMethod
 					}
 				}
 			}
@@ -113,14 +119,10 @@ public class ErasmusService {
 	 * 
 	 * @param fieldName contiene il nome del campo richiesto
 	 * @param op contiene l'operatore che si vuole utilizzare
-	 * @param val valore di riferimento
+	 * @param rif valore di riferimento
 	 * @return lista filtrata
 	 */
 	public List<Erasmus> getFilterData(String fieldName, String op, Object rif) {
 		return this.serviceFilter.select(getData(), fieldName, op, rif);
-	}
-	
-	public Map<String, Object> getFilterStats(String fieldName, String op, Object val) {
-		return (Map<String, Object>) this.serviceFilter.select((List) getStats(fieldName), fieldName, op, val);
 	}
 }
