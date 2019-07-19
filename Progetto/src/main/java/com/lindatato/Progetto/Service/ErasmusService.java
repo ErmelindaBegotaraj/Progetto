@@ -67,7 +67,16 @@ public class ErasmusService {
 	 * @return map delle statistiche desiderate
 	 */
 	public Map<String, Object> getStats(String nomeCampo) {
-		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, getData()));
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> mapError = new HashMap<>();
+		mapError.put("Errore", "Campo inesistente");
+		Field[] fields = Erasmus.class.getDeclaredFields();
+		for (Field f : fields) {
+			if(nomeCampo.equals(f.getName()))
+				map = serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, getData()));
+		}
+		if(map.isEmpty()) return mapError;
+		else return map;
 	}
 	
 	/**
@@ -77,7 +86,16 @@ public class ErasmusService {
 	 * @return map delle statistiche desiderate (quelle filtrate)
 	 */
 	public Map<String, Object> getStats(String nomeCampo, List lista) {
-		return serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, lista));
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> mapError = new HashMap<>();
+		mapError.put("Errore", "Campo inesistente");
+		Field[] fields = Erasmus.class.getDeclaredFields();
+		for (Field f : fields) {
+			if(nomeCampo.equals(f.getName()))
+				map = serviceStats.getStats(nomeCampo, fieldValues(nomeCampo, lista));
+		}
+		if(map.isEmpty()) return mapError;
+		else return map;
 	}
 	
 	/**

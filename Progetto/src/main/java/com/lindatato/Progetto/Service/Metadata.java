@@ -27,7 +27,6 @@ public class Metadata {
             map.put("sourceField", f.getName().toUpperCase());//nome del campo in csv
             map.put("type", f.getType().getSimpleName());
             metadata.add(map);
-            
         	}
 
         }
