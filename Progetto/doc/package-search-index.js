@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.lindatato.Progetto"},{"l":"com.lindatato.Progetto.Controller"},{"l":"com.lindatato.Progetto.Model"},{"l":"com.lindatato.Progetto.Service"},{"l":"com.lindatato.Progetto.Utilities"}]
