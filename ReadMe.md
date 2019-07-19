@@ -151,7 +151,7 @@ SnSupplement</p>
 <h4 id="get-stats">GET stats</h4>
 <p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/sequenzestats.jpg" alt=""></p>
 <h4 id="post-data">POST data</h4>
-<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/postdata.jpg" alt=""></p>
+<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/seqpostdata.jpg" alt=""></p>
 <h4 id="post-stats">POST stats</h4>
 <p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/postStats.jpg" alt=""></p>
 
