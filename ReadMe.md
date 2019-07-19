@@ -40,13 +40,63 @@
 <h2 id="come-applicare-un-filtro">Come applicare un filtro</h2>
 <p>Per applicare un filtro ai dati bisogna scegliere il metodo <strong>POST</strong> . Sul body impostare la stringa <em>raw</em> con il formato <em>JSON(application/json)</em>.</p>
 <p><em><strong>Esempio(Age):</strong></em></p>
+<pre><code>localhost:8080/data
+</code></pre>
+<p>e aggiungere nel body la stringa:</p>
 <pre><code>{"fieldName": "Age", "op":"&amp;gt", "rif":23}
 </code></pre>
-<p>Se invece si vuole lavorare con le statistiche, ovvero se si vogliono applicare filtri alle statistiche si deve specificare nella rotta il nome del campo:</p>
-<pre><code>localhost:8080/filter?field=Age
+<p>Se invece si vuole lavorare con le statistiche di tutti i dati filtrati, impostare il metodo <strong>POST</strong> e assegnare la rotta:</p>
+<pre><code>localhost:8080/stats
 </code></pre>
-<p>Il body ha sempre la stessa forma cioè:</p>
-<pre><code>{"fieldName": "Age", "op":"&amp;gt", "rif":23}
+<p><em><strong>Esempio(Country)</strong></em></p>
+<pre><code>{"fieldName":"Country", "op":"&amp;in", "rif":["DE","ES","CZ"]}
+</code></pre>
+<p>Vengono restituite le statistiche di tutti i campi che hanno al loro interno gli elementi DE, ES, CZ .</p>
+<p>Se si vogliono ottenere le statistiche di un solo campo della lista dei dati filtrati, bisogna specificare nella rotta, attraverso la variabile field, il nome dell’attributo desiderato. Ad esempio:</p>
+<pre><code>localhost:8080/stats?field=Age
+</code></pre>
+<p>che restituisce le statistiche del solo campo Age preso dalla lista dei dati filtrati secondo quanto specificato nel body.</p>
+<p><strong>fieldName</strong> rappresenta il nome del campo su cui applicare il filtro</p>
+<p><strong>op</strong> indica l’operatore ovvero il tipo di filtro richiesto. Si possono applicare i seguenti operatori:</p>
+<ul>
+<li>
+<p>&amp;eq : uguaglianza di due valori</p>
+</li>
+<li>
+<p>&amp;not : non uguaglianza tra due valori</p>
+</li>
+<li>
+<p>&amp;gt : (greater than) elementi maggiori del valore passato</p>
+</li>
+<li>
+<p>&amp;gte : elementi maggiori e uguali al valore passato</p>
+</li>
+<li>
+<p>&amp;lt : (less than) elementi minori al valore passato</p>
+</li>
+<li>
+<p>&amp;lte : elementi minori e uguali al valore passato</p>
+</li>
+<li>
+<p>&amp;in : elemento contenuto nei dati</p>
+</li>
+<li>
+<p>&amp;nin : elemento non contenuto nei dati</p>
+</li>
+<li>
+<p>&amp;bt : (between) elemento compreso tra i valori passati al riferimento</p>
+</li>
+</ul>
+<p><strong>Rif</strong> simboleggia il valore di riferimento.</p>
+<p><strong>Altri esempi:</strong><br>
+1- se il riferimento è una stringa</p>
+<pre><code>{"fieldName":"Country", "op":"&amp;eq", "rif":"DE"}
+</code></pre>
+<p>2-se il riferimento è una lista di stringhe</p>
+<pre><code>{"fieldName":"Nationality", "op":"&amp;in", "rif":["DE","FR","ES"]}
+</code></pre>
+<p>3-se il riferimento è una lista di numeri</p>
+<pre><code>{"fieldName":"LengthStudyPeriod", "op":"&amp;bt", "rif":[2.5,10.25]}
 </code></pre>
 <p><em><strong>Di seguito viene elencata la lista degli attributi:</strong></em><br>
 HomeInstitution<br>
@@ -90,9 +140,9 @@ SnSupplement</p>
 <p><em>Utilities</em> include la classe che permette di fare il download e il parsing del file CSV.</p>
 <h2 id="diagrammi">Diagrammi</h2>
 <h3 id="casi-duso">Casi d’uso</h3>
-<p><img src="https://github.com/ErmelindaBegotaraj/FirstProject/blob/master/casi%20d%27uso.jpg" alt=""></p>
+<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/diagrcasiduso.jpg" alt=""></p>
 <h3 id="classi">Classi</h3>
-<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/diagrammaclassi.jpg" alt=""></p>
+<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/newdiagram.jpg" alt=""></p>
 <h3 id="sequenze">Sequenze</h3>
 <h4 id="get-data">GET data</h4>
 <p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/sequenzeData.jpg" alt=""></p>
@@ -101,7 +151,7 @@ SnSupplement</p>
 <h4 id="get-stats">GET stats</h4>
 <p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/sequenzestats.jpg" alt=""></p>
 <h4 id="post-data">POST data</h4>
-<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/sequenze%20postdata.jpg" alt=""></p>
-<h4 id="post-filter">POST filter</h4>
-<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/sequenze%20postfilter.jpg" alt=""></p>
+<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/postdata.jpg" alt=""></p>
+<h4 id="post-stats">POST stats</h4>
+<p><img src="https://github.com/ErmelindaBegotaraj/Progetto/blob/master/Progetto/diagrammi/postStats.jpg" alt=""></p>
 
